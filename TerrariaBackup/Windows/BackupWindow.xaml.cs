@@ -2,7 +2,6 @@
 using TerrariaBackup.Utilities.Terraria;
 using TerrariaBackup.Models;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows;
 
 namespace TerrariaBackup.Windows;
