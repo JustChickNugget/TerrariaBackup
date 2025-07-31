@@ -64,7 +64,7 @@ public static class DataLoader
     }
     
     /// <summary>
-    /// Find players by selected players.
+    /// Find players by selected player names.
     /// </summary>
     /// <param name="terrariaPath">Path to the Terraria directory.</param>
     /// <param name="playerText">Player names provided by user.</param>
@@ -108,7 +108,7 @@ public static class DataLoader
     }
 
     /// <summary>
-    /// Find worlds by names that user provided.
+    /// Find worlds by selected world names.
     /// </summary>
     /// <param name="terrariaPath">Path to the Terraria's directory.</param>
     /// <param name="worldText">World names provided by user.</param>
