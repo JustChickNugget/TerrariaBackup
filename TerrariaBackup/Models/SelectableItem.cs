@@ -8,7 +8,7 @@ namespace TerrariaBackup.Models;
 public sealed class SelectableItem : INotifyPropertyChanged
 {
     private readonly string? _name;
-    private readonly bool _checked;
+    private bool _checked;
 
     public string? Name
     {
@@ -23,7 +23,7 @@ public sealed class SelectableItem : INotifyPropertyChanged
     public bool Checked
     {
         get => _checked;
-        init
+        set
         {
             _checked = value;
             OnPropertyChanged(nameof(Checked));

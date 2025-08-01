@@ -43,6 +43,70 @@ public partial class BackupWindow
     #region MAIN EVENTS
 
     /// <summary>
+    /// Select all players.
+    /// </summary>
+    private void PlayersSelectAllButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            foreach (SelectableItem player in Players)
+                player.Checked = true;
+        }
+        catch (Exception ex)
+        {
+            ToolBox.PrintException(ex);
+        }
+    }
+
+    /// <summary>
+    /// Deselect all players.
+    /// </summary>
+    private void PlayersDeselectAllButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            foreach (SelectableItem player in Players)
+                player.Checked = false;
+        }
+        catch (Exception ex)
+        {
+            ToolBox.PrintException(ex);
+        }
+    }
+
+    /// <summary>
+    /// Select all worlds.
+    /// </summary>
+    private void WorldsSelectAllButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            foreach (SelectableItem world in Worlds)
+                world.Checked = true;
+        }
+        catch (Exception ex)
+        {
+            ToolBox.PrintException(ex);
+        }
+    }
+
+    /// <summary>
+    /// Deselect all worlds.
+    /// </summary>
+    private void WorldsDeselectAllButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            foreach (SelectableItem world in Worlds)
+                world.Checked = false;
+        }
+        catch (Exception ex)
+        {
+            ToolBox.PrintException(ex);
+        }
+    }
+    
+    /// <summary>
     /// Start backup operation.
     /// </summary>
     private async void BackupButton_Click(object sender, RoutedEventArgs e)
