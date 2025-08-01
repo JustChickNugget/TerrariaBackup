@@ -3,6 +3,7 @@ using TerrariaBackup.Utilities.Terraria;
 using TerrariaBackup.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace TerrariaBackup.Windows;
 
@@ -45,7 +46,7 @@ public partial class BackupWindow
     /// <summary>
     /// Select all players.
     /// </summary>
-    private void PlayersSelectAllButton_Click(object sender, RoutedEventArgs e)
+    private void PlayersSelectAllButton_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -61,7 +62,7 @@ public partial class BackupWindow
     /// <summary>
     /// Deselect all players.
     /// </summary>
-    private void PlayersDeselectAllButton_Click(object sender, RoutedEventArgs e)
+    private void PlayersDeselectAllButton_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -77,7 +78,7 @@ public partial class BackupWindow
     /// <summary>
     /// Select all worlds.
     /// </summary>
-    private void WorldsSelectAllButton_Click(object sender, RoutedEventArgs e)
+    private void WorldsSelectAllButton_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -93,7 +94,7 @@ public partial class BackupWindow
     /// <summary>
     /// Deselect all worlds.
     /// </summary>
-    private void WorldsDeselectAllButton_Click(object sender, RoutedEventArgs e)
+    private void WorldsDeselectAllButton_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -109,7 +110,7 @@ public partial class BackupWindow
     /// <summary>
     /// Start backup operation.
     /// </summary>
-    private async void BackupButton_Click(object sender, RoutedEventArgs e)
+    private async void BackupButton_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -182,4 +183,23 @@ public partial class BackupWindow
     }
 
     #endregion
+
+    /// <summary>
+    /// Handle user's input. If the user presses 'Enter', the button will be pressed that starts backup process.
+    /// </summary>
+    private void Window_OnKeyDown(object sender, KeyEventArgs e)
+    {
+        try
+        {
+            if (e.Key != Key.Enter)
+                return;
+            
+            e.Handled = true;
+            BackupButton_OnClick(sender, e);
+        }
+        catch (Exception ex)
+        {
+            ToolBox.PrintException(ex);
+        }
+    }
 }

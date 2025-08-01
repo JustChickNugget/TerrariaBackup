@@ -9,7 +9,8 @@
         WindowStartupLocation="CenterScreen"
         SizeToContent="Height"
         ResizeMode="CanMinimize"
-        Loaded="Window_OnLoaded">
+        Loaded="Window_OnLoaded"
+        KeyDown="Window_OnKeyDown">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -24,17 +25,17 @@
                 <MenuItem Header="Application">
                     <MenuItem
                         Header="About"
-                        Click="ApplicationAboutMenuItem_Click" />
+                        Click="ApplicationAboutMenuItem_OnClick" />
                     
                     <MenuItem
                         Header="Check for updates"
-                        Click="ApplicationCheckForUpdatesMenuItem_Click" />
+                        Click="ApplicationCheckForUpdatesMenuItem_OnClick" />
                 </MenuItem>
                 
                 <MenuItem Header="Developer">
                     <MenuItem
                         Header="GitHub"
-                        Click="DeveloperGitHubMenuItem_Click" />
+                        Click="DeveloperGitHubMenuItem_OnClick" />
                 </MenuItem>
             </MenuItem>
         </Menu>

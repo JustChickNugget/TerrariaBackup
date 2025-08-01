@@ -4,6 +4,7 @@ using TerrariaBackup.Other;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using Microsoft.Win32;
 
 namespace TerrariaBackup;
@@ -181,7 +182,7 @@ public partial class MainWindow
     /// <summary>
     /// Show information about the application.
     /// </summary>
-    private void ApplicationAboutMenuItem_Click(object sender, RoutedEventArgs e)
+    private void ApplicationAboutMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -197,7 +198,7 @@ public partial class MainWindow
     /// <summary>
     /// Check for updates using GitHub's API.
     /// </summary>
-    private async void ApplicationCheckForUpdatesMenuItem_Click(object sender, RoutedEventArgs e)
+    private async void ApplicationCheckForUpdatesMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -235,7 +236,7 @@ public partial class MainWindow
     /// <summary>
     /// Open developer's GitHub profile page.
     /// </summary>
-    private void DeveloperGitHubMenuItem_Click(object sender, RoutedEventArgs e)
+    private void DeveloperGitHubMenuItem_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -265,6 +266,25 @@ public partial class MainWindow
             
             if (Directory.Exists(Constants.DefaultBackupPath))
                 BackupPathTextBox.Text = Constants.DefaultBackupPath;
+        }
+        catch (Exception ex)
+        {
+            ToolBox.PrintException(ex);
+        }
+    }
+    
+    /// <summary>
+    /// Handle user's input. If the user presses 'Enter', the button will be pressed that opens backup window.
+    /// </summary>
+    private void Window_OnKeyDown(object sender, KeyEventArgs e)
+    {
+        try
+        {
+            if (e.Key != Key.Enter)
+                return;
+            
+            e.Handled = true;
+            ShowFoundButton_OnClick(sender, e);
         }
         catch (Exception ex)
         {

@@ -15,7 +15,8 @@
         WindowStartupLocation="CenterScreen"
         SnapsToDevicePixels="True"
         ResizeMode="CanResizeWithGrip"
-        Loaded="Window_OnLoaded">
+        Loaded="Window_OnLoaded"
+        KeyDown="Window_OnKeyDown">
     
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -107,12 +108,12 @@
                 <Button
                     Grid.Column="0"
                     Content="Select all"
-                    Click="PlayersSelectAllButton_Click" />
+                    Click="PlayersSelectAllButton_OnClick" />
                 
                 <Button
                     Grid.Column="2"
                     Content="Deselect all"
-                    Click="PlayersDeselectAllButton_Click" />
+                    Click="PlayersDeselectAllButton_OnClick" />
             </Grid>
             
             <Grid Grid.Row="4"
@@ -126,12 +127,12 @@
                 <Button
                     Grid.Column="0"
                     Content="Select all"
-                    Click="WorldsSelectAllButton_Click" />
+                    Click="WorldsSelectAllButton_OnClick" />
                 
                 <Button
                     Grid.Column="2"
                     Content="Deselect all"
-                    Click="WorldsDeselectAllButton_Click" />
+                    Click="WorldsDeselectAllButton_OnClick" />
             </Grid>
         </Grid>
         
@@ -158,6 +159,6 @@
             Padding="15 0"
             Content="Backup"
             HorizontalAlignment="Right"
-            Click="BackupButton_Click" />
+            Click="BackupButton_OnClick" />
     </Grid>
 </Window>
