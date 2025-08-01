@@ -3,7 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TerrariaBackup.Windows"
+        xmlns:models="clr-namespace:TerrariaBackup.Models"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:BackupWindow}"
         Title="Terraria Backup: Backup"
         Width="750"
         Height="450"
@@ -11,26 +14,15 @@
         MinHeight="450"
         WindowStartupLocation="CenterScreen"
         SnapsToDevicePixels="True"
+        ResizeMode="CanResizeWithGrip"
         Loaded="Window_OnLoaded">
-    
-    <Window.Resources>
-        <Style TargetType="ListView">
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-            <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
-        </Style>
-        
-        <Style TargetType="TextBlock">
-            <Setter Property="Margin" Value="0 0 0 5" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-        </Style>
-    </Window.Resources>
     
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -41,14 +33,16 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         
-        <TextBlock 
+        <TextBlock
             Grid.Row="0"
             Grid.Column="0"
+            Style="{StaticResource ResourceKey=HeaderTextBlock}"
             Text="Players" />
         
         <TextBlock
             Grid.Row="0"
             Grid.Column="2"
+            Style="{StaticResource ResourceKey=HeaderTextBlock}"
             Text="Worlds" />
         
         <ListView Grid.Row="1"
@@ -58,7 +52,7 @@
                 <GridView>
                     <GridViewColumn Header="Found players">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="models:SelectableItem">
                                 <CheckBox IsChecked="{Binding Path=Checked}">
                                     <TextBlock Text="{Binding Path=Name}" />
                                 </CheckBox>
@@ -83,7 +77,7 @@
                 <GridView>
                     <GridViewColumn Header="Found worlds">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="models:SelectableItem">
                                 <CheckBox IsChecked="{Binding Path=Checked}">
                                     <TextBlock Text="{Binding Path=Name}" />
                                 </CheckBox>
@@ -94,11 +88,32 @@
             </ListView.View>
         </ListView>
         
+        <Grid Grid.Row="3"
+              Grid.Column="0"
+              Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <ProgressBar
+                Grid.Column="0"
+                Value="{Binding Path=BackupProgressTracker.ProgressComputedValue, Mode=OneWay}"
+                Minimum="0"
+                Maximum="1" />
+            
+            <TextBlock
+                Grid.Column="2"
+                Text="{Binding Path=BackupProgressTracker.ProgressStatusText, Mode=OneWay}" />
+        </Grid>
+        
         <Button
-            Grid.Row="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
+            Grid.Row="5"
+            Grid.Column="2"
+            Padding="15 0"
             Content="Backup"
+            HorizontalAlignment="Right"
             Click="BackupButton_Click" />
     </Grid>
 </Window>

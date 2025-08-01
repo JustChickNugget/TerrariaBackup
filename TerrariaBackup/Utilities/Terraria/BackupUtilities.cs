@@ -21,7 +21,9 @@ public static class BackupUtilities
     /// <param name="backupDirectoryName">Name of the backup directory.</param>
     /// <param name="selectedPlayers">String of selected players (separated by ';').</param>
     /// <param name="selectedWorlds">String of selected worlds (separated by ';').</param>
-    public static async void Backup(string terrariaPath, string backupPath, string backupDirectoryName, string selectedPlayers, string selectedWorlds)
+    /// <param name="progressCallback">Callback of progress (copied files, total files)</param>
+    public static async Task Backup(string terrariaPath, string backupPath, string backupDirectoryName,
+        string selectedPlayers, string selectedWorlds, Action<int, int>? progressCallback = null)
     {
         try
         {
@@ -38,7 +40,14 @@ public static class BackupUtilities
             {
                 List<Player> players = DataLoader.FindPlayers(terrariaPath, selectedPlayers);
                 List<World> worlds = DataLoader.FindWorlds(terrariaPath, selectedWorlds);
-            
+
+                int copiedFiles = 0;
+                int totalFiles =
+                    players.Sum(player => player.Files.Count + player.MapFiles.Count) +
+                    worlds.Sum(world => world.Files.Count + world.SubworldFiles.Count);
+                
+                progressCallback?.Invoke(copiedFiles, totalFiles);
+                
                 string backupDirectoryPath =
                     Path.Combine(backupPath, string.Join('_', backupDirectoryName.Split(Path.GetInvalidFileNameChars())));
 
@@ -66,7 +75,10 @@ public static class BackupUtilities
                 foreach (Player player in players)
                 {
                     foreach (string playerFile in player.Files)
+                    {
                         File.Copy(playerFile, Path.Combine(playersPath, Path.GetFileName(playerFile)));
+                        progressCallback?.Invoke(++copiedFiles, totalFiles);
+                    }
 
                     if (player.MapFiles.Count > 0)
                     {
@@ -74,14 +86,20 @@ public static class BackupUtilities
                         Directory.CreateDirectory(playerMapsPath);
                     
                         foreach (string playerMapFile in player.MapFiles)
+                        {
                             File.Copy(playerMapFile, Path.Combine(playerMapsPath, Path.GetFileName(playerMapFile)));
+                            progressCallback?.Invoke(++copiedFiles, totalFiles);
+                        }
                     }
                 }
 
                 foreach (World world in worlds)
                 {
                     foreach (string worldFile in world.Files)
+                    {
                         File.Copy(worldFile, Path.Combine(worldsPath, Path.GetFileName(worldFile)));
+                        progressCallback?.Invoke(++copiedFiles, totalFiles);
+                    }
 
                     if (world.SubworldFiles.Count > 0)
                     {
@@ -89,7 +107,10 @@ public static class BackupUtilities
                         Directory.CreateDirectory(subworldsPath);
                     
                         foreach (string subworldFile in world.SubworldFiles)
+                        {
                             File.Copy(subworldFile, Path.Combine(subworldsPath, Path.GetFileName(subworldFile)));
+                            progressCallback?.Invoke(++copiedFiles, totalFiles);
+                        }
                     }
                 }
             });

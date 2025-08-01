@@ -14,9 +14,12 @@ public partial class BackupWindow
     private string TerrariaPath { get; }
     private string BackupPath { get; }
     private string BackupDirectoryName { get; }
-
+    
     public ObservableCollection<SelectableItem> Players { get; } = [];
     public ObservableCollection<SelectableItem> Worlds { get; } = [];
+    public static ProgressTracker BackupProgressTracker { get; } = new();
+
+    private Action<int, int> ProgressCallback { get; }
 
     public BackupWindow(string terrariaPath, string backupPath, string backupDirectoryName)
     {
@@ -26,6 +29,15 @@ public partial class BackupWindow
         TerrariaPath = terrariaPath;
         BackupPath = backupPath;
         BackupDirectoryName = backupDirectoryName;
+        
+        ProgressCallback = (copiedFiles, totalFiles) =>
+        {
+            Dispatcher.Invoke(() =>
+            {
+                BackupProgressTracker.Value = copiedFiles;
+                BackupProgressTracker.MaximumValue = totalFiles;
+            });
+        };
     }
 
     #region MAIN EVENTS
@@ -33,7 +45,7 @@ public partial class BackupWindow
     /// <summary>
     /// Start backup operation.
     /// </summary>
-    private void BackupButton_Click(object sender, RoutedEventArgs e)
+    private async void BackupButton_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -52,15 +64,14 @@ public partial class BackupWindow
 
             if (string.IsNullOrEmpty(selectedPlayersString) && string.IsNullOrEmpty(selectedWorldsString))
                 throw new ArgumentNullException(null, "Select at least one player or world.");
-            
-            BackupUtilities.Backup(
+
+            await BackupUtilities.Backup(
                 TerrariaPath,
                 BackupPath,
                 BackupDirectoryName,
                 selectedPlayersString,
-                selectedWorldsString);
-
-            Close();
+                selectedWorldsString,
+                ProgressCallback);
         }
         catch (Exception ex)
         {
