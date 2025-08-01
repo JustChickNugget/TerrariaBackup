@@ -5,26 +5,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
         Title="Terraria Backup: Backup"
+        Width="750"
+        Height="450"
+        MinWidth="750"
+        MinHeight="450"
         WindowStartupLocation="CenterScreen"
-        SizeToContent="WidthAndHeight"
         SnapsToDevicePixels="True"
-        ResizeMode="CanMinimize"
         Loaded="Window_OnLoaded">
     
     <Window.Resources>
-        <Style x:Key="ListViewStyle" TargetType="ListView">
-            <Setter Property="MinWidth" Value="350" />
-            <Setter Property="MaxWidth" Value="350" />
-            <Setter Property="MinHeight" Value="350" />
-            <Setter Property="MaxHeight" Value="350" />
+        <Style TargetType="ListView">
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
             <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
         </Style>
+        
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="0 0 0 5" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
     </Window.Resources>
     
-    <Grid Margin="15 10 15 15">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
@@ -36,59 +41,61 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         
-        <!-- Players -->
-        <StackPanel Grid.Row="0"
-                    Grid.Column="0">
-            <Label
-                Content="Players"
-                HorizontalAlignment="Center" />
-            
-            <ListView Style="{StaticResource ResourceKey=ListViewStyle}"
-                      ItemsSource="{Binding Path=Players}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Found players">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding Path=Checked}">
-                                        <TextBlock Text="{Binding Path=Name}" />
-                                    </CheckBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
+        <TextBlock 
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="Players" />
         
-        <!-- Worlds -->
-        <StackPanel Grid.Row="0"
-                    Grid.Column="2">
-            <Label
-                Content="Worlds"
-                HorizontalAlignment="Center" />
-            
-            <ListView Style="{StaticResource ResourceKey=ListViewStyle}"
-                      ItemsSource="{Binding Path=Worlds}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Found worlds">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding Path=Checked}">
-                                        <TextBlock Text="{Binding Path=Name}" />
-                                    </CheckBox>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="2"
+            Text="Worlds" />
         
-        <!-- Operations -->
+        <ListView Grid.Row="1"
+                  Grid.Column="0"
+                  ItemsSource="{Binding Path=Players}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Found players">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Path=Checked}">
+                                    <TextBlock Text="{Binding Path=Name}" />
+                                </CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+        <GridSplitter
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Stretch" />
+        
+        <ListView Grid.Row="1"
+                  Grid.Column="2"
+                  ItemsSource="{Binding Path=Worlds}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Found worlds">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Path=Checked}">
+                                    <TextBlock Text="{Binding Path=Name}" />
+                                </CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
         <Button
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             Content="Backup"

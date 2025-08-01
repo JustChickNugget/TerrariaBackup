@@ -22,7 +22,7 @@ public partial class BackupWindow
     {
         InitializeComponent();
         DataContext = this;
-
+        
         TerrariaPath = terrariaPath;
         BackupPath = backupPath;
         BackupDirectoryName = backupDirectoryName;
