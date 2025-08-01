@@ -17,6 +17,9 @@ public static class Constants
     private static string DeveloperLink => "https://github.com/JustChickNugget";
     public static string RepositoryLink { get; } = $"{DeveloperLink}/TerrariaBackup";
     
+    public static string ReleasesApiLink =>
+        "https://api.github.com/repos/JustChickNugget/TerrariaBackup/releases/latest";
+    
     public static ProcessStartInfo DeveloperGitHubProcessStartInfo { get; } = new()
     {
         FileName = DeveloperLink,

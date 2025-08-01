@@ -1,10 +1,13 @@
 ﻿using TerrariaBackup.Structs.API;
 using TerrariaBackup.Other;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.Json;
 using System.Windows;
+
+#if DEBUG
+using System.Diagnostics;
+#endif
 
 namespace TerrariaBackup.Utilities;
 
@@ -16,51 +19,32 @@ public static class ToolBox
     /// <summary>
     /// Check for updates using GitHub's API.
     /// </summary>
-    public static async void CheckForUpdates()
+    /// <param name="cancellationToken">Token to cancel operations.</param>
+    public static async Task<bool> CheckForUpdates(CancellationToken cancellationToken = default)
     {
-        try
-        {
-            await Task.Run(async() =>
-            {
-                using HttpClient client = new();
-                client.DefaultRequestHeaders.Add("User-Agent", "TerrariaBackup");
+        using HttpClient client = new();
+        client.DefaultRequestHeaders.Add("User-Agent", "NuggetLib");
+        
+        string response = await client.GetStringAsync(Constants.ReleasesApiLink, cancellationToken);
+        GitHubApiResponse gitHubApiResponse = JsonSerializer.Deserialize<GitHubApiResponse>(response);
+
+        if (gitHubApiResponse.TagName == null)
+            throw new ArgumentNullException(null, "Couldn't check version: tag name is null.");
             
-                string response = await client.GetStringAsync
-                    ("https://api.github.com/repos/JustChickNugget/TerrariaBackup/releases/latest");
-
-                GitHubApiResponse gitHubApiResponse = JsonSerializer.Deserialize<GitHubApiResponse>(response);
-
-                Version? currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
-                Version latestReleaseVersion = Version.Parse(gitHubApiResponse.TagName + ".0");
-
-                if (latestReleaseVersion.CompareTo(currentVersion) >= 1)
-                {
-                    MessageBoxResult messageBoxResult = MessageBox.Show(
-                        "An update is available. Would you like to download the update?",
-                        "Update checker",
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Information);
-                    
-                    if (messageBoxResult == MessageBoxResult.Yes)
-                    {
-                        Process.Start(new ProcessStartInfo
-                        {
-                            FileName = Constants.RepositoryLink,
-                            UseShellExecute = true
-                        });
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Current version is up to date.", "Update checker",
-                        MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            });
-        }
-        catch (Exception ex)
-        {
-            PrintException(ex);
-        }
+        Version currentVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0, 0, 0);
+            
+        string latestReleaseVersionString = gitHubApiResponse.TagName.StartsWith('v')
+            ? gitHubApiResponse.TagName[1..]
+            : gitHubApiResponse.TagName;
+            
+        latestReleaseVersionString = latestReleaseVersionString.Split('.').Length == 3
+            ? latestReleaseVersionString + ".0"
+            : latestReleaseVersionString;
+            
+        if (!Version.TryParse(latestReleaseVersionString, out Version? latestReleaseVersion))
+            throw new FormatException($"Invalid version format: {gitHubApiResponse.TagName}");
+            
+        return latestReleaseVersion > currentVersion;
     }
     
     /// <summary>

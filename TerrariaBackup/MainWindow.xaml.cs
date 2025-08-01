@@ -197,11 +197,34 @@ public partial class MainWindow
     /// <summary>
     /// Check for updates using GitHub's API.
     /// </summary>
-    private void ApplicationCheckForUpdatesMenuItem_Click(object sender, RoutedEventArgs e)
+    private async void ApplicationCheckForUpdatesMenuItem_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            ToolBox.CheckForUpdates();
+            bool updatesAvailable = await ToolBox.CheckForUpdates();
+
+            if (updatesAvailable)
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show(
+                    "An update is available. Would you like to download the update?",
+                    "Update checker",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Information);
+                
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = Constants.RepositoryLink,
+                        UseShellExecute = true
+                    });
+                }
+            }
+            else
+            {
+                MessageBox.Show("Current version is up to date.", "Update checker",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         catch (Exception ex)
         {
