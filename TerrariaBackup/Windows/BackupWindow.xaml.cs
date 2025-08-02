@@ -18,7 +18,7 @@ public partial class BackupWindow
     
     public ObservableCollection<SelectableItem> Players { get; } = [];
     public ObservableCollection<SelectableItem> Worlds { get; } = [];
-    public static ProgressTracker BackupProgressTracker { get; } = new();
+    public ProgressTracker BackupProgressTracker { get; } = new();
 
     private Action<int, int> ProgressCallback { get; }
 
