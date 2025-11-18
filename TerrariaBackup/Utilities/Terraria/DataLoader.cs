@@ -1,6 +1,6 @@
-﻿using TerrariaBackup.Structs.Terraria;
+﻿using System.IO;
 using TerrariaBackup.Other;
-using System.IO;
+using TerrariaBackup.Structs.Terraria;
 
 namespace TerrariaBackup.Utilities.Terraria;
 
@@ -17,25 +17,25 @@ public static class DataLoader
     public static List<string> LoadPlayerNames(string terrariaPath)
     {
         string playersPath = Path.Combine(terrariaPath, Constants.PlayersDirectoryName);
-        
+
         List<string> foundPlayers = Directory
             .GetFiles(playersPath, "*.*plr*", Constants.DefaultEnumerationOptions)
             .ToList();
-        
+
         List<string> playerNames = [];
 
         foreach (string foundPlayer in foundPlayers)
         {
             string playerName = Path.GetFileName(foundPlayer)
                 .Split('.', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)[0];
-            
+
             playerNames.Add(playerName);
         }
-        
+
         playerNames = playerNames.Distinct().ToList();
         return playerNames;
     }
-    
+
     /// <summary>
     /// Get all world names from the Terraria's directory.
     /// </summary>
@@ -44,25 +44,25 @@ public static class DataLoader
     public static List<string> LoadWorldNames(string terrariaPath)
     {
         string worldsPath = Path.Combine(terrariaPath, Constants.WorldsDirectoryName);
-        
+
         List<string> foundWorlds = Directory
             .GetFiles(worldsPath, "*.*wld*", Constants.DefaultEnumerationOptions)
             .ToList();
-        
+
         List<string> worldNames = [];
-        
+
         foreach (string foundWorld in foundWorlds)
         {
             string worldName = Path.GetFileName(foundWorld)
                 .Split('.', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)[0];
-            
+
             worldNames.Add(worldName);
         }
-        
+
         worldNames = worldNames.Distinct().ToList();
         return worldNames;
     }
-    
+
     /// <summary>
     /// Find players by selected player names.
     /// </summary>
@@ -73,7 +73,7 @@ public static class DataLoader
     {
         List<Player> players = [];
         string playersPath = Path.Combine(terrariaPath, Constants.PlayersDirectoryName);
-        
+
         string[] playerNames = playerText
             .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Distinct()
@@ -82,20 +82,20 @@ public static class DataLoader
         foreach (string playerName in playerNames)
         {
             string playerMapsPath = Path.Combine(playersPath, playerName);
-        
+
             List<string> playerFiles = Directory
                 .GetFiles(playersPath, $"{playerName}.*plr*", Constants.DefaultEnumerationOptions)
                 .ToList();
 
             List<string> playerMapFiles = [];
-        
+
             if (Directory.Exists(playerMapsPath))
             {
                 playerMapFiles = Directory
                     .GetFiles(playerMapsPath, "*", Constants.DefaultEnumerationOptions)
                     .ToList();
             }
-        
+
             players.Add(new Player
             {
                 Name = playerName,
@@ -103,7 +103,7 @@ public static class DataLoader
                 MapFiles = playerMapFiles
             });
         }
-        
+
         return players;
     }
 
@@ -117,7 +117,7 @@ public static class DataLoader
     {
         List<World> worlds = [];
         string worldsPath = Path.Combine(terrariaPath, Constants.WorldsDirectoryName);
-        
+
         string[] worldNames = worldText
             .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Distinct()
@@ -126,20 +126,20 @@ public static class DataLoader
         foreach (string worldName in worldNames)
         {
             string subworldsPath = Path.Combine(worldsPath, worldName);
-        
+
             List<string> worldFiles = Directory
                 .GetFiles(worldsPath, $"{worldName}.*wld*", Constants.DefaultEnumerationOptions)
                 .ToList();
 
             List<string> subworldFiles = [];
-        
+
             if (Directory.Exists(subworldsPath))
             {
                 subworldFiles = Directory
                     .GetFiles(subworldsPath, "*", Constants.DefaultEnumerationOptions)
                     .ToList();
             }
-        
+
             worlds.Add(new World
             {
                 Name = worldName,

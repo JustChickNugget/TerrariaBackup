@@ -1,7 +1,7 @@
-﻿using TerrariaBackup.Structs.Terraria;
-using TerrariaBackup.Other;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
+using TerrariaBackup.Other;
+using TerrariaBackup.Structs.Terraria;
 
 namespace TerrariaBackup.Utilities.Terraria;
 
@@ -28,14 +28,20 @@ public static class BackupUtilities
         try
         {
             if (string.IsNullOrEmpty(terrariaPath))
+            {
                 throw new ArgumentNullException(null, "Terraria path cannot be null or empty.");
-            
+            }
+
             if (string.IsNullOrEmpty(backupPath))
+            {
                 throw new ArgumentNullException(null, "Backup path cannot be null or empty.");
-            
+            }
+
             if (string.IsNullOrEmpty(backupDirectoryName))
+            {
                 throw new ArgumentNullException(null, "Backup directory name cannot be null or empty.");
-            
+            }
+
             await Task.Run(() =>
             {
                 List<Player> players = DataLoader.FindPlayers(terrariaPath, selectedPlayers);
@@ -45,11 +51,13 @@ public static class BackupUtilities
                 int totalFiles =
                     players.Sum(player => player.Files.Count + player.MapFiles.Count) +
                     worlds.Sum(world => world.Files.Count + world.SubworldFiles.Count);
-                
+
                 progressCallback?.Invoke(copiedFiles, totalFiles);
+
+                string backupDirectoryNameClean =
+                    string.Join('_', backupDirectoryName.Split(Path.GetInvalidFileNameChars()));
                 
-                string backupDirectoryPath =
-                    Path.Combine(backupPath, string.Join('_', backupDirectoryName.Split(Path.GetInvalidFileNameChars())));
+                string backupDirectoryPath = Path.Combine(backupPath, backupDirectoryNameClean);
 
                 if (Directory.Exists(backupDirectoryPath))
                 {
@@ -60,18 +68,22 @@ public static class BackupUtilities
                         MessageBoxImage.Information);
 
                     if (messageBoxResult == MessageBoxResult.Yes)
+                    {
                         Directory.Delete(backupDirectoryPath, true);
+                    }
                     else
+                    {
                         return;
+                    }
                 }
-            
+
                 string playersPath = Path.Combine(backupDirectoryPath, Constants.PlayersDirectoryName);
                 string worldsPath = Path.Combine(backupDirectoryPath, Constants.WorldsDirectoryName);
-            
+
                 Directory.CreateDirectory(backupDirectoryPath);
                 Directory.CreateDirectory(playersPath);
                 Directory.CreateDirectory(worldsPath);
-            
+
                 foreach (Player player in players)
                 {
                     foreach (string playerFile in player.Files)
@@ -80,16 +92,18 @@ public static class BackupUtilities
                         progressCallback?.Invoke(++copiedFiles, totalFiles);
                     }
 
-                    if (player.MapFiles.Count > 0)
+                    if (player.MapFiles.Count <= 0)
                     {
-                        string playerMapsPath = Path.Combine(playersPath, player.Name);
-                        Directory.CreateDirectory(playerMapsPath);
-                    
-                        foreach (string playerMapFile in player.MapFiles)
-                        {
-                            File.Copy(playerMapFile, Path.Combine(playerMapsPath, Path.GetFileName(playerMapFile)));
-                            progressCallback?.Invoke(++copiedFiles, totalFiles);
-                        }
+                        continue;
+                    }
+
+                    string playerMapsPath = Path.Combine(playersPath, player.Name);
+                    Directory.CreateDirectory(playerMapsPath);
+
+                    foreach (string playerMapFile in player.MapFiles)
+                    {
+                        File.Copy(playerMapFile, Path.Combine(playerMapsPath, Path.GetFileName(playerMapFile)));
+                        progressCallback?.Invoke(++copiedFiles, totalFiles);
                     }
                 }
 
@@ -101,16 +115,18 @@ public static class BackupUtilities
                         progressCallback?.Invoke(++copiedFiles, totalFiles);
                     }
 
-                    if (world.SubworldFiles.Count > 0)
+                    if (world.SubworldFiles.Count <= 0)
                     {
-                        string subworldsPath = Path.Combine(worldsPath, world.Name);
-                        Directory.CreateDirectory(subworldsPath);
-                    
-                        foreach (string subworldFile in world.SubworldFiles)
-                        {
-                            File.Copy(subworldFile, Path.Combine(subworldsPath, Path.GetFileName(subworldFile)));
-                            progressCallback?.Invoke(++copiedFiles, totalFiles);
-                        }
+                        continue;
+                    }
+
+                    string subworldsPath = Path.Combine(worldsPath, world.Name);
+                    Directory.CreateDirectory(subworldsPath);
+
+                    foreach (string subworldFile in world.SubworldFiles)
+                    {
+                        File.Copy(subworldFile, Path.Combine(subworldsPath, Path.GetFileName(subworldFile)));
+                        progressCallback?.Invoke(++copiedFiles, totalFiles);
                     }
                 }
             });

@@ -1,9 +1,9 @@
-﻿using TerrariaBackup.Utilities;
-using TerrariaBackup.Other;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
+using TerrariaBackup.Other;
+using TerrariaBackup.Utilities;
 
 namespace TerrariaBackup.Windows;
 
@@ -18,7 +18,7 @@ public partial class AboutWindow
     }
 
     #region MAIN EVENTS
-    
+
     /// <summary>
     /// Hyperlink, that opens repository's page in the browser.
     /// </summary>
@@ -36,11 +36,11 @@ public partial class AboutWindow
             ToolBox.PrintException(ex);
         }
     }
-    
+
     #endregion
-    
+
     #region WINDOW EVENTS
-    
+
     /// <summary>
     /// Gets application's version from the assembly and sets the repository link to the hyperlink.
     /// </summary>

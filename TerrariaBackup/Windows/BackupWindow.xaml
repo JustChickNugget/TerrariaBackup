@@ -17,7 +17,7 @@
         ResizeMode="CanResizeWithGrip"
         Loaded="Window_OnLoaded"
         KeyDown="Window_OnKeyDown">
-    
+
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -26,7 +26,7 @@
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -35,28 +35,29 @@
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
+
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
                 Style="{StaticResource ResourceKey=HeaderTextBlock}"
                 Text="Players" />
-            
+
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="2"
                 Style="{StaticResource ResourceKey=HeaderTextBlock}"
                 Text="Worlds" />
-            
-            <ListView Grid.Row="2"
-                      Grid.Column="0"
-                      ItemsSource="{Binding Path=Players}">
+
+            <ListView
+                Grid.Row="2"
+                Grid.Column="0"
+                ItemsSource="{Binding Path=Players}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Found players">
@@ -71,17 +72,18 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            
+
             <GridSplitter
                 Grid.Row="2"
                 Grid.Column="1"
                 Width="2"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Stretch" />
-            
-            <ListView Grid.Row="2"
-                      Grid.Column="2"
-                      ItemsSource="{Binding Path=Worlds}">
+
+            <ListView
+                Grid.Row="2"
+                Grid.Column="2"
+                ItemsSource="{Binding Path=Worlds}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Found worlds">
@@ -96,64 +98,66 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            
-            <Grid Grid.Row="4"
-                  Grid.Column="0">
+
+            <Grid
+                Grid.Row="4"
+                Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Button
                     Grid.Column="0"
                     Content="Select all"
                     Click="PlayersSelectAllButton_OnClick" />
-                
+
                 <Button
                     Grid.Column="2"
                     Content="Deselect all"
                     Click="PlayersDeselectAllButton_OnClick" />
             </Grid>
-            
-            <Grid Grid.Row="4"
-                  Grid.Column="2">
+
+            <Grid
+                Grid.Row="4"
+                Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Button
                     Grid.Column="0"
                     Content="Select all"
                     Click="WorldsSelectAllButton_OnClick" />
-                
+
                 <Button
                     Grid.Column="2"
                     Content="Deselect all"
                     Click="WorldsDeselectAllButton_OnClick" />
             </Grid>
         </Grid>
-        
+
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            
+
             <ProgressBar
                 Grid.Column="0"
                 Value="{Binding Path=BackupProgressTracker.ProgressComputedValue, Mode=OneWay}"
                 Minimum="0"
                 Maximum="1" />
-            
+
             <TextBlock
                 Grid.Column="2"
                 Text="{Binding Path=BackupProgressTracker.ProgressStatusText, Mode=OneWay}" />
         </Grid>
-        
+
         <Button
             Grid.Row="4"
             Padding="15 0"

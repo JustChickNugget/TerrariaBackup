@@ -29,7 +29,7 @@ public sealed class SelectableItem : INotifyPropertyChanged
             OnPropertyChanged(nameof(Checked));
         }
     }
-    
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged(string propertyName)

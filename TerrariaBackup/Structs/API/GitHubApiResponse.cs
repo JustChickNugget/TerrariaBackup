@@ -7,6 +7,5 @@ namespace TerrariaBackup.Structs.API;
 /// </summary>
 public readonly struct GitHubApiResponse
 {
-    [JsonPropertyName("tag_name")]
-    public required string TagName { get; init; }
+    [JsonPropertyName("tag_name")] public required string TagName { get; init; }
 }

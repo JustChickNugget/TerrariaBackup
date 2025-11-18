@@ -1,11 +1,11 @@
-﻿using TerrariaBackup.Windows;
-using TerrariaBackup.Utilities;
-using TerrariaBackup.Other;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
+using TerrariaBackup.Other;
+using TerrariaBackup.Utilities;
+using TerrariaBackup.Windows;
 
 namespace TerrariaBackup;
 
@@ -20,9 +20,9 @@ public partial class MainWindow
     }
 
     #region MAIN EVENTS
-    
+
     #region LOCATION
-    
+
     /// <summary>
     /// Go up one directory for Terraria's path.
     /// </summary>
@@ -33,14 +33,16 @@ public partial class MainWindow
             string previousDirectory = Path.GetDirectoryName(TerrariaPathTextBox.Text) ?? "";
 
             if (!string.IsNullOrEmpty(previousDirectory))
+            {
                 TerrariaPathTextBox.Text = previousDirectory;
+            }
         }
         catch (Exception ex)
         {
             ToolBox.PrintException(ex);
         }
     }
-    
+
     /// <summary>
     /// Open Terraria's directory in the explorer.
     /// </summary>
@@ -54,7 +56,7 @@ public partial class MainWindow
                 UseShellExecute = true,
                 CreateNoWindow = true
             };
-            
+
             Process.Start(processStartInfo);
         }
         catch (Exception ex)
@@ -62,7 +64,7 @@ public partial class MainWindow
             ToolBox.PrintException(ex);
         }
     }
-    
+
     /// <summary>
     /// Choose Terraria's directory.
     /// </summary>
@@ -73,10 +75,14 @@ public partial class MainWindow
             OpenFolderDialog openFolderDialog = new();
 
             if (!string.IsNullOrEmpty(TerrariaPathTextBox.Text))
+            {
                 openFolderDialog.InitialDirectory = TerrariaPathTextBox.Text;
+            }
 
             if (openFolderDialog.ShowDialog() ?? false)
+            {
                 TerrariaPathTextBox.Text = openFolderDialog.FolderName;
+            }
         }
         catch (Exception ex)
         {
@@ -94,7 +100,9 @@ public partial class MainWindow
             string previousDirectory = Path.GetDirectoryName(BackupPathTextBox.Text) ?? "";
 
             if (!string.IsNullOrEmpty(previousDirectory))
+            {
                 BackupPathTextBox.Text = previousDirectory;
+            }
         }
         catch (Exception ex)
         {
@@ -115,7 +123,7 @@ public partial class MainWindow
                 UseShellExecute = true,
                 CreateNoWindow = true
             };
-            
+
             Process.Start(processStartInfo);
         }
         catch (Exception ex)
@@ -134,21 +142,25 @@ public partial class MainWindow
             OpenFolderDialog openFolderDialog = new();
 
             if (!string.IsNullOrEmpty(BackupPathTextBox.Text))
+            {
                 openFolderDialog.InitialDirectory = BackupPathTextBox.Text;
+            }
 
             if (openFolderDialog.ShowDialog() ?? false)
+            {
                 BackupPathTextBox.Text = openFolderDialog.FolderName;
+            }
         }
         catch (Exception ex)
         {
             ToolBox.PrintException(ex);
         }
     }
-    
+
     #endregion
-    
+
     #region OPERATIONS
-    
+
     /// <summary>
     /// Show found players and worlds in a Terraria's directory.
     /// </summary>
@@ -158,15 +170,17 @@ public partial class MainWindow
         {
             string playersPath = Path.Combine(TerrariaPathTextBox.Text, Constants.PlayersDirectoryName);
             string worldsPath = Path.Combine(TerrariaPathTextBox.Text, Constants.WorldsDirectoryName);
-            
+
             if (!Directory.Exists(playersPath) || !Directory.Exists(worldsPath))
+            {
                 throw new DirectoryNotFoundException("Players or worlds directory not found.");
-            
+            }
+
             BackupWindow backupWindow = new(
                 TerrariaPathTextBox.Text,
                 BackupPathTextBox.Text,
                 BackupDirectoryNameTextBox.Text);
-            
+
             backupWindow.ShowDialog();
         }
         catch (Exception ex)
@@ -174,11 +188,11 @@ public partial class MainWindow
             ToolBox.PrintException(ex);
         }
     }
-    
+
     #endregion
-    
+
     #region MENU EVENTS
-    
+
     /// <summary>
     /// Show information about the application.
     /// </summary>
@@ -211,7 +225,7 @@ public partial class MainWindow
                     "Update checker",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Information);
-                
+
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
                     Process.Start(new ProcessStartInfo
@@ -247,13 +261,13 @@ public partial class MainWindow
             ToolBox.PrintException(ex);
         }
     }
-    
+
     #endregion
-    
+
     #endregion
-    
+
     #region WINDOW EVENTS
-    
+
     /// <summary>
     /// Set text boxes' content if paths exist.
     /// </summary>
@@ -262,17 +276,21 @@ public partial class MainWindow
         try
         {
             if (Directory.Exists(Constants.DefaultTerrariaPath))
+            {
                 TerrariaPathTextBox.Text = Constants.DefaultTerrariaPath;
-            
+            }
+
             if (Directory.Exists(Constants.DefaultBackupPath))
+            {
                 BackupPathTextBox.Text = Constants.DefaultBackupPath;
+            }
         }
         catch (Exception ex)
         {
             ToolBox.PrintException(ex);
         }
     }
-    
+
     /// <summary>
     /// Handle user's input. If the user presses 'Enter', the button will be pressed that opens backup window.
     /// </summary>
@@ -281,8 +299,10 @@ public partial class MainWindow
         try
         {
             if (e.Key != Key.Enter)
+            {
                 return;
-            
+            }
+
             e.Handled = true;
             ShowFoundButton_OnClick(sender, e);
         }
@@ -291,6 +311,6 @@ public partial class MainWindow
             ToolBox.PrintException(ex);
         }
     }
-    
+
     #endregion
 }

@@ -1,9 +1,9 @@
-﻿using TerrariaBackup.Utilities;
-using TerrariaBackup.Utilities.Terraria;
-using TerrariaBackup.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using TerrariaBackup.Models;
+using TerrariaBackup.Utilities;
+using TerrariaBackup.Utilities.Terraria;
 
 namespace TerrariaBackup.Windows;
 
@@ -15,7 +15,7 @@ public partial class BackupWindow
     private string TerrariaPath { get; }
     private string BackupPath { get; }
     private string BackupDirectoryName { get; }
-    
+
     public ObservableCollection<SelectableItem> Players { get; } = [];
     public ObservableCollection<SelectableItem> Worlds { get; } = [];
     public ProgressTracker BackupProgressTracker { get; } = new();
@@ -26,11 +26,11 @@ public partial class BackupWindow
     {
         InitializeComponent();
         DataContext = this;
-        
+
         TerrariaPath = terrariaPath;
         BackupPath = backupPath;
         BackupDirectoryName = backupDirectoryName;
-        
+
         ProgressCallback = (copiedFiles, totalFiles) =>
         {
             Dispatcher.Invoke(() =>
@@ -51,7 +51,9 @@ public partial class BackupWindow
         try
         {
             foreach (SelectableItem player in Players)
+            {
                 player.Checked = true;
+            }
         }
         catch (Exception ex)
         {
@@ -67,7 +69,9 @@ public partial class BackupWindow
         try
         {
             foreach (SelectableItem player in Players)
+            {
                 player.Checked = false;
+            }
         }
         catch (Exception ex)
         {
@@ -83,7 +87,9 @@ public partial class BackupWindow
         try
         {
             foreach (SelectableItem world in Worlds)
+            {
                 world.Checked = true;
+            }
         }
         catch (Exception ex)
         {
@@ -99,14 +105,16 @@ public partial class BackupWindow
         try
         {
             foreach (SelectableItem world in Worlds)
+            {
                 world.Checked = false;
+            }
         }
         catch (Exception ex)
         {
             ToolBox.PrintException(ex);
         }
     }
-    
+
     /// <summary>
     /// Start backup operation.
     /// </summary>
@@ -128,7 +136,9 @@ public partial class BackupWindow
             string selectedWorldsString = string.Join(";", selectedWorlds);
 
             if (string.IsNullOrEmpty(selectedPlayersString) && string.IsNullOrEmpty(selectedWorldsString))
+            {
                 throw new ArgumentNullException(null, "Select at least one player or world.");
+            }
 
             await BackupUtilities.Backup(
                 TerrariaPath,
@@ -157,7 +167,7 @@ public partial class BackupWindow
         {
             List<string> playerNames = DataLoader.LoadPlayerNames(TerrariaPath);
             List<string> worldNames = DataLoader.LoadWorldNames(TerrariaPath);
-            
+
             foreach (string playerName in playerNames)
             {
                 Players.Add(new SelectableItem
@@ -192,8 +202,10 @@ public partial class BackupWindow
         try
         {
             if (e.Key != Key.Enter)
+            {
                 return;
-            
+            }
+
             e.Handled = true;
             BackupButton_OnClick(sender, e);
         }

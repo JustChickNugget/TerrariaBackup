@@ -9,7 +9,7 @@ public sealed class ProgressTracker : INotifyPropertyChanged
 {
     private int _value;
     private int _maximumValue;
-    
+
     public int Value
     {
         get => _value;
@@ -34,7 +34,7 @@ public sealed class ProgressTracker : INotifyPropertyChanged
 
     public double ProgressComputedValue => MaximumValue == 0 ? 0 : (double)Value / MaximumValue;
     public string ProgressStatusText => $"{Value} / {MaximumValue}";
-    
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged(string propertyName)
