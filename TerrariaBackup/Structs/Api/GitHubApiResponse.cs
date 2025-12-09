@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace TerrariaBackup.Structs.API;
+namespace TerrariaBackup.Structs.Api;
 
 /// <summary>
 /// Contains latest tag name which is marked as version.

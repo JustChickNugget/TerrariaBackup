@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Windows;
 using TerrariaBackup.Other;
-using TerrariaBackup.Structs.API;
+using TerrariaBackup.Structs.Api;
 
 #if DEBUG
 using System.Diagnostics;
