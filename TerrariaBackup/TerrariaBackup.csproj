@@ -7,8 +7,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Icon.ico</ApplicationIcon>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.0</FileVersion>
+        <AssemblyVersion>1.1.0</AssemblyVersion>
+        <FileVersion>1.1.0</FileVersion>
         <Title>TerrariaBackup</Title>
         <Authors>JustChickNugget</Authors>
         <Description>Backup your Terraria players and worlds</Description>
@@ -16,7 +16,7 @@
         <RepositoryUrl>https://github.com/JustChickNugget/TerrariaBackup</RepositoryUrl>
         <Company>JustChickNugget</Company>
         <Product>TerrariaBackup</Product>
-        <Version>1.0.0</Version>
+        <Version>1.1.0</Version>
         <Configurations>Debug;Release;GitHubScreenshot</Configurations>
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
