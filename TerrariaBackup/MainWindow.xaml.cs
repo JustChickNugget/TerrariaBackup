@@ -275,6 +275,10 @@ public partial class MainWindow
     {
         try
         {
+#if GITHUBSCREENSHOT
+            TerrariaPathTextBox.Text = Constants.DefaultTerrariaPath.Replace(Environment.UserName, "user");
+            BackupPathTextBox.Text = Constants.DefaultBackupPath.Replace(Environment.UserName, "user");
+#else
             if (Directory.Exists(Constants.DefaultTerrariaPath))
             {
                 TerrariaPathTextBox.Text = Constants.DefaultTerrariaPath;
@@ -284,6 +288,7 @@ public partial class MainWindow
             {
                 BackupPathTextBox.Text = Constants.DefaultBackupPath;
             }
+#endif
         }
         catch (Exception ex)
         {
