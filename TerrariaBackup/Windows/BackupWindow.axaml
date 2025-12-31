@@ -1,0 +1,192 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:TerrariaBackup.ViewModels"
+        xmlns:models="clr-namespace:TerrariaBackup.Models"
+        x:Class="TerrariaBackup.Windows.BackupWindow"
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="450"
+        Width="800"
+        Height="450"
+        MinWidth="450"
+        MinHeight="300"
+        WindowStartupLocation="CenterScreen"
+        Title="Backup Data"
+        Loaded="Window_OnLoaded"
+        KeyDown="Window_OnKeyDown">
+    <Grid
+        RowDefinitions="*, Auto, Auto"
+        RowSpacing="10"
+        Margin="15">
+        <Grid
+            Grid.Row="0"
+            RowDefinitions="Auto, *, Auto"
+            ColumnDefinitions="*, Auto, *"
+            RowSpacing="10"
+            ColumnSpacing="10">
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Players"
+                FontWeight="Bold"
+                HorizontalAlignment="Center" />
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="2"
+                Text="Worlds"
+                FontWeight="Bold"
+                HorizontalAlignment="Center" />
+
+            <Border
+                Grid.Row="1"
+                Grid.Column="0"
+                CornerRadius="4"
+                Background="{DynamicResource ResourceKey=BaseColor}"
+                ClipToBounds="True">
+                <DataGrid
+                    ItemsSource="{Binding Path=Players, DataType=vm:BackupViewModel}"
+                    AutoGenerateColumns="False"
+                    CanUserResizeColumns="True"
+                    CanUserSortColumns="True"
+                    CanUserReorderColumns="False"
+                    SelectionMode="Single"
+                    IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn
+                            Header="Player names"
+                            SortMemberPath="Name">
+                            <DataTemplate DataType="models:SelectableItem">
+                                <CheckBox
+                                    Margin="10, 0, 0, 0"
+                                    IsChecked="{Binding Path=IsSelected}"
+                                    VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Path=Name}" />
+                                </CheckBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <GridSplitter
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="5"
+                MinWidth="5"
+                MaxWidth="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Stretch" />
+
+            <Border
+                Grid.Row="1"
+                Grid.Column="2"
+                CornerRadius="4"
+                Background="{DynamicResource ResourceKey=BaseColor}"
+                ClipToBounds="True">
+                <DataGrid
+                    ItemsSource="{Binding Path=Worlds, DataType=vm:BackupViewModel}"
+                    AutoGenerateColumns="False"
+                    CanUserResizeColumns="True"
+                    CanUserSortColumns="True"
+                    CanUserReorderColumns="False"
+                    SelectionMode="Single"
+                    IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn
+                            Header="World names"
+                            SortMemberPath="Name">
+                            <DataTemplate DataType="models:SelectableItem">
+                                <CheckBox
+                                    Margin="10, 0, 0, 0"
+                                    IsChecked="{Binding Path=IsSelected}"
+                                    VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Path=Name}" />
+                                </CheckBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <Grid
+                Grid.Row="2"
+                Grid.Column="0"
+                ColumnDefinitions="*, *"
+                ColumnSpacing="10">
+                <Button
+                    Grid.Column="0"
+                    Content="Select all"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Click="PlayersSelectAllButton_OnClick" />
+
+                <Button
+                    Grid.Column="1"
+                    Content="Deselect all"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Click="PlayersDeselectAllButton_OnClick" />
+            </Grid>
+
+            <Grid
+                Grid.Row="2"
+                Grid.Column="2"
+                ColumnDefinitions="*, *"
+                ColumnSpacing="10">
+                <Button
+                    Grid.Column="0"
+                    Content="Select all"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Click="WorldsSelectAllButton_OnClick" />
+
+                <Button
+                    Grid.Column="1"
+                    Content="Deselect all"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Click="WorldsDeselectAllButton_OnClick" />
+            </Grid>
+        </Grid>
+
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*, Auto"
+            ColumnSpacing="10">
+            <ProgressBar
+                Grid.Column="0"
+                Value="{Binding Path=BackupProgressTracker.ProgressDecimalValue, DataType=vm:BackupViewModel, Mode=OneWay}"
+                Minimum="0"
+                Maximum="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center" />
+
+            <TextBlock
+                Grid.Column="1"
+                Text="{Binding Path=BackupProgressTracker.ProgressValueStatusText, DataType=vm:BackupViewModel, Mode=OneWay}" />
+        </Grid>
+
+        <Grid
+            Grid.Row="2"
+            ColumnDefinitions="*, Auto"
+            ColumnSpacing="10">
+            <Button
+                Grid.Column="0"
+                Content="Backup"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Click="BackupButton_OnClick" />
+
+            <Button
+                Grid.Column="1"
+                Content="Close"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                MinWidth="200"
+                Click="CloseButton_OnClick" />
+        </Grid>
+    </Grid>
+</Window>

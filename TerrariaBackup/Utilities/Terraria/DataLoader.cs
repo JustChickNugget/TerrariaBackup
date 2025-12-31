@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using TerrariaBackup.Models.Terraria;
 using TerrariaBackup.Other;
-using TerrariaBackup.Structs.Terraria;
 
 namespace TerrariaBackup.Utilities.Terraria;
 
@@ -10,10 +13,10 @@ namespace TerrariaBackup.Utilities.Terraria;
 public static class DataLoader
 {
     /// <summary>
-    /// Get all player names from the Terraria's directory.
+    /// Get all player names from the Terraria directory.
     /// </summary>
-    /// <param name="terrariaPath">Path to the Terraria directory.</param>
-    /// <returns>List of player names.</returns>
+    /// <param name="terrariaPath">Path to the Terraria directory</param>
+    /// <returns>List of player names</returns>
     public static List<string> LoadPlayerNames(string terrariaPath)
     {
         string playersPath = Path.Combine(terrariaPath, Constants.PlayersDirectoryName);
@@ -37,10 +40,10 @@ public static class DataLoader
     }
 
     /// <summary>
-    /// Get all world names from the Terraria's directory.
+    /// Get all world names from the Terraria directory.
     /// </summary>
-    /// <param name="terrariaPath">Path to the Terraria directory.</param>
-    /// <returns>List of world names.</returns>
+    /// <param name="terrariaPath">Path to the Terraria directory</param>
+    /// <returns>List of world names</returns>
     public static List<string> LoadWorldNames(string terrariaPath)
     {
         string worldsPath = Path.Combine(terrariaPath, Constants.WorldsDirectoryName);
@@ -66,28 +69,27 @@ public static class DataLoader
     /// <summary>
     /// Find players by selected player names.
     /// </summary>
-    /// <param name="terrariaPath">Path to the Terraria directory.</param>
-    /// <param name="playerText">Player names provided by user.</param>
-    /// <returns>List of found players.</returns>
-    public static List<Player> FindPlayers(string terrariaPath, string playerText)
+    /// <param name="terrariaPath">Path to the Terraria directory</param>
+    /// <param name="selectedPlayers">List of selected players</param>
+    /// <returns>List of found players</returns>
+    public static List<Player> FindPlayers(string terrariaPath, List<string?> selectedPlayers)
     {
         List<Player> players = [];
         string playersPath = Path.Combine(terrariaPath, Constants.PlayersDirectoryName);
 
-        string[] playerNames = playerText
-            .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Distinct()
-            .ToArray();
-
-        foreach (string playerName in playerNames)
+        foreach (string? selectedPlayer in selectedPlayers)
         {
-            string playerMapsPath = Path.Combine(playersPath, playerName);
+            if (string.IsNullOrEmpty(selectedPlayer))
+            {
+                continue;
+            }
 
             List<string> playerFiles = Directory
-                .GetFiles(playersPath, $"{playerName}.*plr*", Constants.DefaultEnumerationOptions)
+                .GetFiles(playersPath, $"{selectedPlayer}.*plr*", Constants.DefaultEnumerationOptions)
                 .ToList();
 
             List<string> playerMapFiles = [];
+            string playerMapsPath = Path.Combine(playersPath, selectedPlayer);
 
             if (Directory.Exists(playerMapsPath))
             {
@@ -98,7 +100,7 @@ public static class DataLoader
 
             players.Add(new Player
             {
-                Name = playerName,
+                Name = selectedPlayer,
                 Files = playerFiles,
                 MapFiles = playerMapFiles
             });
@@ -110,28 +112,27 @@ public static class DataLoader
     /// <summary>
     /// Find worlds by selected world names.
     /// </summary>
-    /// <param name="terrariaPath">Path to the Terraria's directory.</param>
-    /// <param name="worldText">World names provided by user.</param>
-    /// <returns>List of found worlds.</returns>
-    public static List<World> FindWorlds(string terrariaPath, string worldText)
+    /// <param name="terrariaPath">Path to the Terraria directory</param>
+    /// <param name="selectedWorlds">List of selected worlds</param>
+    /// <returns>List of found worlds</returns>
+    public static List<World> FindWorlds(string terrariaPath, List<string?> selectedWorlds)
     {
         List<World> worlds = [];
         string worldsPath = Path.Combine(terrariaPath, Constants.WorldsDirectoryName);
 
-        string[] worldNames = worldText
-            .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Distinct()
-            .ToArray();
-
-        foreach (string worldName in worldNames)
+        foreach (string? selectedWorld in selectedWorlds)
         {
-            string subworldsPath = Path.Combine(worldsPath, worldName);
+            if (string.IsNullOrEmpty(selectedWorld))
+            {
+                continue;
+            }
 
             List<string> worldFiles = Directory
-                .GetFiles(worldsPath, $"{worldName}.*wld*", Constants.DefaultEnumerationOptions)
+                .GetFiles(worldsPath, $"{selectedWorld}.*wld*", Constants.DefaultEnumerationOptions)
                 .ToList();
 
             List<string> subworldFiles = [];
+            string subworldsPath = Path.Combine(worldsPath, selectedWorld);
 
             if (Directory.Exists(subworldsPath))
             {
@@ -142,7 +143,7 @@ public static class DataLoader
 
             worlds.Add(new World
             {
-                Name = worldName,
+                Name = selectedWorld,
                 Files = worldFiles,
                 SubworldFiles = subworldFiles
             });

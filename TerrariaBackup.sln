@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrariaBackup", "TerrariaBackup\TerrariaBackup.csproj", "{2B48906E-E841-4817-AA23-60EBB14CAC28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrariaBackup", "TerrariaBackup\TerrariaBackup.csproj", "{683DC559-78ED-4C1C-B5D0-FB61ACEF8F0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 		GitHubScreenshot|Any CPU = GitHubScreenshot|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2B48906E-E841-4817-AA23-60EBB14CAC28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B48906E-E841-4817-AA23-60EBB14CAC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B48906E-E841-4817-AA23-60EBB14CAC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B48906E-E841-4817-AA23-60EBB14CAC28}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B48906E-E841-4817-AA23-60EBB14CAC28}.GitHubScreenshot|Any CPU.ActiveCfg = GitHubScreenshot|Any CPU
-		{2B48906E-E841-4817-AA23-60EBB14CAC28}.GitHubScreenshot|Any CPU.Build.0 = GitHubScreenshot|Any CPU
+		{683DC559-78ED-4C1C-B5D0-FB61ACEF8F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683DC559-78ED-4C1C-B5D0-FB61ACEF8F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683DC559-78ED-4C1C-B5D0-FB61ACEF8F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{683DC559-78ED-4C1C-B5D0-FB61ACEF8F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{683DC559-78ED-4C1C-B5D0-FB61ACEF8F0A}.GitHubScreenshot|Any CPU.ActiveCfg = GitHubScreenshot|Any CPU
+		{683DC559-78ED-4C1C-B5D0-FB61ACEF8F0A}.GitHubScreenshot|Any CPU.Build.0 = GitHubScreenshot|Any CPU
 	EndGlobalSection
 EndGlobal

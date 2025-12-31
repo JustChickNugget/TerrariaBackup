@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="TerrariaBackup/App.axaml" value="TerrariaBackup/TerrariaBackup.csproj" />
+        <entry key="TerrariaBackup/MainWindow.axaml" value="TerrariaBackup/TerrariaBackup.csproj" />
+        <entry key="TerrariaBackup/Windows/AboutWindow.axaml" value="TerrariaBackup/TerrariaBackup.csproj" />
+        <entry key="TerrariaBackup/Windows/BackupWindow.axaml" value="TerrariaBackup/TerrariaBackup.csproj" />
+        <entry key="TerrariaBackup/Windows/CheckUpdatesWindow.axaml" value="TerrariaBackup/TerrariaBackup.csproj" />
+        <entry key="TerrariaBackup/Windows/ExceptionWindow.axaml" value="TerrariaBackup/TerrariaBackup.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

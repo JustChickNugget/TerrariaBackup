@@ -1,43 +1,81 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace TerrariaBackup.Models;
 
 /// <summary>
-/// Used for tracking progress (like in ProgressBar)
+/// Progress track model.
 /// </summary>
 public sealed class ProgressTracker : INotifyPropertyChanged
 {
-    private int _value;
-    private int _maximumValue;
-
-    public int Value
+    /// <summary>
+    /// Property: progress current value.
+    /// </summary>
+    public int CurrentValue
     {
-        get => _value;
+        get => _currentValue;
         set
         {
-            _value = value;
-            OnPropertyChanged(nameof(Value));
-            OnPropertyChanged(nameof(ProgressComputedValue));
-            OnPropertyChanged(nameof(ProgressStatusText));
+            if (_currentValue == value)
+            {
+                return;
+            }
+
+            _currentValue = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(ProgressDecimalValue));
+            OnPropertyChanged(nameof(ProgressValueStatusText));
         }
     }
 
+    /// <summary>
+    /// Property: progress maximum value.
+    /// </summary>
     public int MaximumValue
     {
         get => _maximumValue;
         set
         {
+            if (_maximumValue == value)
+            {
+                return;
+            }
+
             _maximumValue = value;
-            OnPropertyChanged(nameof(MaximumValue));
+            OnPropertyChanged();
         }
     }
 
-    public double ProgressComputedValue => MaximumValue == 0 ? 0 : (double)Value / MaximumValue;
-    public string ProgressStatusText => $"{Value} / {MaximumValue}";
+    /// <summary>
+    /// Progress decimal value (from 0 to 1).
+    /// </summary>
+    public double ProgressDecimalValue => MaximumValue == 0 ? 0 : (double)CurrentValue / MaximumValue;
 
+    /// <summary>
+    /// Progress value status text.
+    /// </summary>
+    public string ProgressValueStatusText => $"{CurrentValue} / {MaximumValue}";
+
+    /// <summary>
+    /// Field: progress current value.
+    /// </summary>
+    private int _currentValue;
+
+    /// <summary>
+    /// Field: progress maximum value.
+    /// </summary>
+    private int _maximumValue;
+
+    /// <summary>
+    /// Property changed event handler.
+    /// </summary>
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private void OnPropertyChanged(string propertyName)
+    /// <summary>
+    /// Handle on property changed event.
+    /// </summary>
+    /// <param name="propertyName">Property name</param>
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
