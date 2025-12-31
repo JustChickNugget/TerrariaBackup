@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.Json;
@@ -9,6 +8,10 @@ using Avalonia.Controls;
 using TerrariaBackup.Models.Api;
 using TerrariaBackup.Other;
 using TerrariaBackup.Windows;
+
+#if DEBUG
+using System.Diagnostics;
+#endif
 
 namespace TerrariaBackup.Utilities;
 
