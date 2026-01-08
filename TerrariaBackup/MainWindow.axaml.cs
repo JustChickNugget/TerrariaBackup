@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -48,7 +49,16 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(TerrariaPathUpButton_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(TerrariaPathUpButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(TerrariaPathUpButton_OnClick));
         }
     }
 
@@ -77,7 +87,16 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(TerrariaPathOpenButton_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(TerrariaPathOpenButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(TerrariaPathOpenButton_OnClick));
         }
     }
 
@@ -109,7 +128,16 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(TerrariaPathSelectButton_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(TerrariaPathSelectButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(TerrariaPathSelectButton_OnClick));
         }
     }
 
@@ -136,7 +164,16 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(BackupPathUpButton_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(BackupPathUpButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(BackupPathUpButton_OnClick));
         }
     }
 
@@ -165,7 +202,16 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(BackupPathOpenButton_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(BackupPathOpenButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(BackupPathOpenButton_OnClick));
         }
     }
 
@@ -197,7 +243,16 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(BackupPathSelectButton_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(BackupPathSelectButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(BackupPathSelectButton_OnClick));
         }
     }
 
@@ -214,7 +269,12 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(BackupDirectoryDefaultButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
                 this,
                 exception,
                 nameof(MainWindow),
@@ -270,7 +330,16 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(ShowFoundDataButton_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(ShowFoundDataButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(ShowFoundDataButton_OnClick));
         }
     }
 
@@ -287,12 +356,34 @@ public partial class MainWindow : Window
     {
         try
         {
-            AboutWindow aboutWindow = new();
+            Version? version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            if (version == null)
+            {
+                throw new ArgumentNullException(null, "Failed to get version of the application.");
+            }
+
+            NuggetLib.Views.Windows.AboutWindow aboutWindow = new(
+                "Terraria Backup",
+                "Backup your Terraria players and worlds",
+                Constants.DeveloperLink,
+                Constants.RepositoryLink,
+                version);
+
             await aboutWindow.ShowDialog(this);
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(AboutApplicationMenuItem_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(AboutApplicationMenuItem_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(AboutApplicationMenuItem_OnClick));
         }
     }
 
@@ -305,12 +396,32 @@ public partial class MainWindow : Window
     {
         try
         {
-            CheckUpdatesWindow checkUpdatesWindow = new();
-            await checkUpdatesWindow.ShowDialog(this);
+            Version? version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            if (version == null)
+            {
+                throw new ArgumentNullException(null, "Failed to get version of the application.");
+            }
+
+            NuggetLib.Views.Windows.UpdateCheckWindow updateCheckWindow = new(
+                Constants.LatestReleaseLink,
+                Constants.LatestReleaseApiLink,
+                version);
+
+            await updateCheckWindow.ShowDialog(this);
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(CheckForUpdatesMenuItem_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(CheckForUpdatesMenuItem_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(CheckForUpdatesMenuItem_OnClick));
         }
     }
 
@@ -349,7 +460,16 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(Window_OnLoaded));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(Window_OnLoaded));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(Window_OnLoaded));
         }
     }
 
@@ -372,7 +492,16 @@ public partial class MainWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(MainWindow), nameof(Window_OnKeyDown));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(MainWindow),
+                nameof(Window_OnKeyDown));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(MainWindow),
+                nameof(Window_OnKeyDown));
         }
     }
 

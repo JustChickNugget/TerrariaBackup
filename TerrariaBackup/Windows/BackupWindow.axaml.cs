@@ -5,7 +5,6 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using TerrariaBackup.Models;
-using TerrariaBackup.Utilities;
 using TerrariaBackup.Utilities.Terraria;
 using TerrariaBackup.ViewModels;
 
@@ -72,7 +71,12 @@ public partial class BackupWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(BackupWindow),
+                nameof(PlayersSelectAllButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
                 this,
                 exception,
                 nameof(BackupWindow),
@@ -101,7 +105,12 @@ public partial class BackupWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(BackupWindow),
+                nameof(PlayersDeselectAllButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
                 this,
                 exception,
                 nameof(BackupWindow),
@@ -130,7 +139,12 @@ public partial class BackupWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(BackupWindow),
+                nameof(WorldsSelectAllButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
                 this,
                 exception,
                 nameof(BackupWindow),
@@ -159,7 +173,12 @@ public partial class BackupWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(BackupWindow),
+                nameof(WorldsDeselectAllButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
                 this,
                 exception,
                 nameof(BackupWindow),
@@ -211,7 +230,16 @@ public partial class BackupWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(BackupWindow), nameof(BackupButton_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(BackupWindow),
+                nameof(BackupButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(BackupWindow),
+                nameof(BackupButton_OnClick));
         }
     }
 
@@ -228,7 +256,16 @@ public partial class BackupWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(BackupWindow), nameof(BackupButton_OnClick));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(BackupWindow),
+                nameof(CloseButton_OnClick));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(BackupWindow),
+                nameof(CloseButton_OnClick));
         }
     }
 
@@ -278,7 +315,16 @@ public partial class BackupWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(BackupWindow), nameof(Window_OnLoaded));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(BackupWindow),
+                nameof(Window_OnLoaded));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(BackupWindow),
+                nameof(Window_OnLoaded));
         }
     }
 
@@ -301,7 +347,16 @@ public partial class BackupWindow : Window
         }
         catch (Exception exception)
         {
-            await ToolBox.PrintException(this, exception, nameof(BackupWindow), nameof(Window_OnKeyDown));
+            NuggetLib.Core.Utilities.DebugLogger.LogException(
+                exception,
+                nameof(BackupWindow),
+                nameof(Window_OnKeyDown));
+
+            await NuggetLib.Views.Services.ExceptionHandleService.ShowExceptionAsync(
+                this,
+                exception,
+                nameof(BackupWindow),
+                nameof(Window_OnKeyDown));
         }
     }
 
