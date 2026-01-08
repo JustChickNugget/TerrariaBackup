@@ -185,7 +185,7 @@
                 Content="Close"
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Center"
-                MinWidth="200"
+                MinWidth="150"
                 Click="CloseButton_OnClick" />
         </Grid>
     </Grid>
