@@ -430,7 +430,7 @@ public partial class MainWindow : Window
     #region Window events
 
     /// <summary>
-    /// Handle window's load.
+    /// Handle window load.
     /// </summary>
     /// <param name="sender">Sender object</param>
     /// <param name="e">Event arguments</param>
@@ -474,7 +474,7 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Handle user's input.
+    /// Handle user input.
     /// </summary>
     /// <param name="sender">Sender object</param>
     /// <param name="e">Event arguments</param>
